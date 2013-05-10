@@ -5,7 +5,7 @@ module Spree
     # Receive a direct notification from the gateway
     def sermepa_notify
       notify = ActiveMerchant::Billing::Integrations::Sermepa.notification(request.query_parameters)
-      @order ||= Order.find_by_number! ('R'+ params['ds_order'][1..9])
+      @order ||= Order.find_by_number! ('L'+ params['ds_order'][1..9])
       notify_acknowledge = notify.acknowledge(sermepa_credentials(payment_method))
       if notify_acknowledge
         #TODO add source to payment
