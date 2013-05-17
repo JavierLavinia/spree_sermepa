@@ -10,6 +10,8 @@ module Spree
       
       notify = ActiveMerchant::Billing::Integrations::Sermepa.notification(params)
       @order ||= Spree::Order.find_by_number! params['order_id']
+      
+      logger.error ">>>>>>>>>>>>>>>>>>>  #{sermepa_credentials(payment_method)}"
       notify_acknowledge = notify.acknowledge(sermepa_credentials(payment_method))
       if notify_acknowledge
         #TODO add source to payment
