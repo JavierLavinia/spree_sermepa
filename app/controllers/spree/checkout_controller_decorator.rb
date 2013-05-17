@@ -32,7 +32,7 @@ module Spree
         payment.failure!
       end
       
-      redirect_to root_path
+      redirect_to '/'
     end
 
     # Handle the incoming user
