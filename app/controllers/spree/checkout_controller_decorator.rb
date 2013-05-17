@@ -8,7 +8,7 @@ module Spree
       params.each{|k,v| tmp[k.downcase] = v}
       params.merge!(tmp)
       
-      notify = ActiveMerchant::Billing::Integrations::Sermepa.notification(request.query_parameters)
+      notify = ActiveMerchant::Billing::Integrations::Sermepa.notification(params)
       @order ||= Spree::Order.find_by_number! params['order_id']
       notify_acknowledge = notify.acknowledge(sermepa_credentials(payment_method))
       if notify_acknowledge
