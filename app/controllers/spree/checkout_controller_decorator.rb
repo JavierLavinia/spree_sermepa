@@ -27,6 +27,8 @@ module Spree
                                           :without_protection => true)
         payment.failure!
       end
+      
+      redirect_to root_path
     end
 
     # Handle the incoming user
