@@ -16,6 +16,8 @@ module Spree
         @order.payments.destroy_all
         order_upgrade
         payment_upgrade
+        payment = Spree::Payment.find_by_order_id(@order)
+        payment.complete!
       else
         @order.payments.destroy_all
         payment = @order.payments.create({:amount => @order.total,
