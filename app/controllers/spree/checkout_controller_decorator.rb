@@ -14,13 +14,11 @@ module Spree
       notify_acknowledge = notify.acknowledge(sermepa_credentials(payment_method))
       if notify_acknowledge
         #TODO add source to payment
-        unless @order.state == "complete"
+        if @order.state != "complete" and notify.complete?
           @order.payments.destroy_all
           order_upgrade
           payment_upgrade
         end
-        payment = Spree::Payment.find_by_order_id(@order)
-        payment.complete! if notify.complete?
       else
         @order.payments.destroy_all
         payment = @order.payments.create({:amount => @order.total,
