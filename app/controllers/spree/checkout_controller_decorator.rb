@@ -38,6 +38,7 @@ module Spree
       load_order
       order_upgrade()
       payment_upgrade()
+      
       redirect_to completion_route , :flash => { :notice => I18n.t(:order_processed_successfully), :commerce_tracking => 'nothing special' }
     end
 
