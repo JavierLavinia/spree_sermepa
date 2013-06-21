@@ -38,10 +38,7 @@ module Spree
       load_order
       order_upgrade()
       payment_upgrade()
-      flash[:notice] = I18n.t(:order_processed_successfully)
-      flash[:commerce_tracking] = 'nothing special'
-      flash.keep
-      redirect_to completion_route
+      redirect_to completion_route, :alert => I18n.t(:order_processed_successfully)
     end
 
     # create the gateway from the supplied options
