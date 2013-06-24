@@ -38,7 +38,7 @@ module Spree
       load_order
       order_upgrade()
       payment_upgrade()
-      flash.keep[:commerce_tracking] = I18n.t(:order_processed_successfully)
+      flash.keep[:commerce_tracking] = "nothing special"
       redirect_to completion_route
     end
 
