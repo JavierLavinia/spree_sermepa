@@ -38,7 +38,7 @@ module Spree
       load_order
       order_upgrade()
       payment_upgrade()
-      redirect_to thank_you_page_completion_route
+      redirect_to completion_route
     end
 
     # create the gateway from the supplied options
