@@ -35,15 +35,15 @@ module Spree
 
     # Handle the incoming user
     def sermepa_confirm
-      puts ">> 1 antes de load_order"
+      logger.info ">> 1 antes de load_order"
       load_order
-      puts ">> 2 después de load_order/antes de order_upgrade"
+      logger.info ">> 2 después de load_order/antes de order_upgrade"
       order_upgrade()
-      puts ">> 3 después de order_upgrade/antes de payment_upgrade"
+      logger.info ">> 3 después de order_upgrade/antes de payment_upgrade"
       payment_upgrade()
-      puts ">> 4 después de payment_upgrade/antes de completion_route"
+      logger.info ">> 4 después de payment_upgrade/antes de completion_route"
       redirect_to completion_route
-      puts ">> 5 después completion_route"
+      logger.info ">> 5 después completion_route"
     end
 
     # create the gateway from the supplied options
