@@ -39,7 +39,7 @@ module Spree
       order_upgrade()
       payment_upgrade()
       flash.keep[:commerce_tracking] = "nothing special"
-      redirect_to completion_route
+      redirect_to completion_route( :flash => { :other_flashes => "nothing_special"} )
     end
 
     # create the gateway from the supplied options
