@@ -104,7 +104,6 @@ module Spree
     end
 
     def order_upgrade
-      puts ">>> 2.1 Entra a order_upgrade"
       ## TODO refactor coz u don't need really @order.state = "payment"
       @order.state = "payment"
       @order.save
@@ -119,11 +118,9 @@ module Spree
       end
 
       @order.finalize!
-      puts ">>> 2.2 Sale de order_upgrade"
     end
 
     def payment_upgrade
-            puts ">> 3.1 Entra a payment_upgrade"
       #payment_method = Spree::PaymentMethod.find_by_type("Spree::BillingIntegration::SermepaPayment")
       payment = @order.payments.create({:amount => @order.total,
                                         :source_type => 'Spree:SermepaCreditCard',
@@ -131,8 +128,6 @@ module Spree
                                         :without_protection => true)
       payment.started_processing!
       payment.pend!
-                  puts ">> 3.2 Sale de payment_upgrade"
-
     end
 
   end
