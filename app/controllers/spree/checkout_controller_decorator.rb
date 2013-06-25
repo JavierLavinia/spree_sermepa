@@ -35,10 +35,12 @@ module Spree
 
     # Handle the incoming user
     def sermepa_confirm
+      logger.error ">>> Entra a sermepa_confirm"
       load_order
       order_upgrade()
       payment_upgrade()
       redirect_to completion_route
+      logger.error ">>> Sale de sermepa_confirm y redirige a completion_route"
     end
 
     # create the gateway from the supplied options
@@ -99,6 +101,7 @@ module Spree
     end
 
     def order_upgrade
+      logger.error ">>> Entra a order_upgrade"
       ## TODO refactor coz u don't need really @order.state = "payment"
       @order.state = "payment"
       @order.save
@@ -113,9 +116,11 @@ module Spree
       end
 
       @order.finalize!
+      logger.error ">>> Sale de order_upgrade"
     end
 
     def payment_upgrade
+      logger.error ">>> Entra a payment_upgrade"
       #payment_method = Spree::PaymentMethod.find_by_type("Spree::BillingIntegration::SermepaPayment")
       payment = @order.payments.create({:amount => @order.total,
                                         :source_type => 'Spree:SermepaCreditCard',
@@ -123,6 +128,7 @@ module Spree
                                         :without_protection => true)
       payment.started_processing!
       payment.pend!
+      logger.error ">>> Sale de payment_upgrade"
     end
 
   end
