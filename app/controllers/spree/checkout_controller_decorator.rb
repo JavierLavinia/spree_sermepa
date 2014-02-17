@@ -7,10 +7,11 @@ module Spree
       tmp = {}
       params.each{|k,v| tmp[k.downcase] = v}
       params.merge!(tmp)
-      
+
       notify = ActiveMerchant::Billing::Integrations::Sermepa.notification(params)
       @order ||= Spree::Order.find_by_number! params['order_id']
-      
+
+      http_status = :error # Error status 500 by default
       notify_acknowledge = notify.acknowledge(sermepa_credentials(payment_method))
       if notify_acknowledge and notify.complete? and @order.state != "complete"
         @order.payments.destroy_all
@@ -18,6 +19,7 @@ module Spree
         payment_upgrade
         payment = Spree::Payment.find_by_order_id(@order)
         payment.complete!
+        http_status = :ok # Everything fine, OK status 200
       else
         @order.payments.destroy_all
         payment = @order.payments.create({:amount => @order.total,
@@ -29,8 +31,8 @@ module Spree
                                           :without_protection => true)
         payment.failure!
       end
-      
-      redirect_to '/'
+
+      render :nothing => true, :status => http_status
     end
 
     # Handle the incoming user
