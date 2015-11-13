@@ -4,6 +4,9 @@ module Spree
 
     # Receive a direct notification from the gateway
     def sermepa_notify
+      decoded_params = Base64.decode64(params["Ds_MerchantParameters"])
+      decoded_hash_params = JSON.parse(decoded_params)
+      params.merge!(decoded_hash_params)
       tmp = {}
       params.each{|k,v| tmp[k.downcase] = v}
       params.merge!(tmp)

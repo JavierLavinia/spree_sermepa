@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_sermepa'
-  s.version     = '1.2.3'
+  s.version     = '2.2.3'
   s.summary     = 'Adds Sermepa TPV as a Payment Method to Spree store'
   s.description = 'Sermepa is a spanish payment gateway. Servired Network'
   s.author    = 'Héctor Picazo'
