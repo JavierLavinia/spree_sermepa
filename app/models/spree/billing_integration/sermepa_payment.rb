@@ -4,7 +4,7 @@
     preference :terminal_id, :integer, :default => 1
     preference :currency, :string, :default => 'EUR'
     preference :secret_key, :string
-    preference :key_type, :string, :default => 'sha1_extended' #sabadell is sha1_extended but can be sha1_complete
+    preference :key_type, :string, :default => 'sha256' #sermepa is sha256 since 23-11-2015 (sha1 before)
 
     attr_accessible :preferred_commercial_id, :preferred_notify_url, :preferred_terminal_id, :preferred_currency,
                     :preferred_secret_key, :preferred_key_type, :preferred_server, :preferred_test_mode

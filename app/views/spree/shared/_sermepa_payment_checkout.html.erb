@@ -36,6 +36,19 @@
     <% #Ds_Merchant_MerchantURL
        service.notify_url sermepa_notify_order_checkout_url(@order, :payment_method_id => @payment_method)
     %>
+
+    <% #Ds_MerchantParameters
+       service.merchant_parameters service.merchant_parameters_base64_json
+    %>
+
+    <% #Ds_Signature
+       service.signature service.sign_request
+    %>
+
+    <% #Ds_SignatureVersion
+      service.signature_version "HMAC_SHA256_V1"
+    %>
+
     <%= #Sermepa doesn't accept utf-8 charset
         submit_tag "Go to payment gateway!", :class => 'clear', :style => 'display:none;'%>
 <%end%>
@@ -69,10 +82,21 @@
     dojo.ready(function(){
       // We use dojo hash to control browser history in case of back button is pressed; only affects firefox and opera, pending ie test
       require(["dojo/hash"], function(hash){
-          var currentHash = hash();          
+          var currentHash = hash();
           if (currentHash) { document.location.href = back_url; return; }
           hash(back_url, true);
           document.forms[0].acceptCharset = "ISO-8859-1";
+          // The new form do not need this inputs, with the new SHA256.
+          //
+          var input_ids =
+            ['Ds_Merchant_Order', 'Ds_Merchant_MerchantName', 'Ds_Merchant_Amount', 'Ds_Merchant_Currency',
+             'Ds_Merchant_MerchantCode', 'Ds_Merchant_Terminal', 'Ds_Merchant_TransactionType',
+             'Ds_Merchant_Titular', 'Ds_Merchant_ConsumerLanguage', 'Ds_Merchant_UrlKO', 'Ds_Merchant_UrlOK',
+             'Ds_Merchant_MerchantURL'];
+
+           for(var i = 0; i < input_ids.length; i++){
+              document.getElementById(input_ids[i]).remove();
+           }
           document.forms[0].submit();
       });
     });
