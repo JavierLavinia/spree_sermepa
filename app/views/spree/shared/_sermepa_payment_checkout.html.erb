@@ -95,7 +95,8 @@
              'Ds_Merchant_MerchantURL'];
 
            for(var i = 0; i < input_ids.length; i++){
-              document.getElementById(input_ids[i]).remove();
+              var element = document.getElementById(input_ids[i]);
+              element.parentNode.removeChild(element);
            }
           document.forms[0].submit();
       });
