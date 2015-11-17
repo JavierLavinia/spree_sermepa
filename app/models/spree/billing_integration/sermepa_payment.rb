@@ -1,6 +1,6 @@
   class Spree::BillingIntegration::SermepaPayment < Spree::BillingIntegration
     preference :commercial_id, :string
-    preference :notify_url, :string, :default => 'https://sis-t.sermepa.es:25443/sis/realizarPago'
+    preference :notify_url, :string, :default => 'https://sis-t.redsys.es:25443/sis/realizarPago'
     preference :terminal_id, :integer, :default => 1
     preference :currency, :string, :default => 'EUR'
     preference :secret_key, :string
