@@ -14,6 +14,14 @@ module Spree
       notify = ActiveMerchant::Billing::Integrations::Sermepa.notification(params)
       @order ||= Spree::Order.find_by_number! params['order_id']
 
+      notification_log = Spree::RedsysNotification.create({
+                            order_id: params['order_id'],
+                            order_amount: @order.total,
+                            ds_amount: (params['ds_amount'].to_f / 100),
+                            ds_response: params['ds_response'],
+                            ds_merchant_parameters: decoded_hash_params.select{ |k,v| k.start_with?('Ds') }.to_yaml
+                          })
+
       http_status = :error # Error status 500 by default
       notify_acknowledge = notify.acknowledge(sermepa_credentials(payment_method))
       if notify_acknowledge and notify.complete? and @order.state != "complete"
@@ -34,6 +42,8 @@ module Spree
                                           :without_protection => true)
         payment.failure!
       end
+
+      notification_log.update_attributes({response_code: http_status})
 
       render :nothing => true, :status => http_status
     end
