@@ -15,7 +15,7 @@ module Spree
       @order ||= Spree::Order.find_by_number! params['order_id']
 
       notification_log = Spree::RedsysNotification.create({
-                            order_id: params['order_id'],
+                            order_id: @order.id,
                             order_amount: @order.total,
                             ds_amount: (params['ds_amount'].to_f / 100),
                             ds_response: params['ds_response'],
