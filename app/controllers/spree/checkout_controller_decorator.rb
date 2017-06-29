@@ -41,6 +41,7 @@ module Spree
                                            :avs_response => notify.error_message[0..255]},
                                           :without_protection => true)
         payment.failure!
+        http_status = :ok # We processed the request, OK status 200
       end
 
       notification_log.update_attributes({response_code: http_status})
